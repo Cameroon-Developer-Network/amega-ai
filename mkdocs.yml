@@ -1,8 +1,11 @@
 site_name: Amega AI
-site_url: https://cameroon-developer-network.github.io/amega-ai/
-repo_url: https://github.com/Cameroon-Developer-Network/amega-ai
-repo_name: Cameroon-Developer-Network/amega-ai
+site_url: https://amega-ai.github.io/amega-ai/
+repo_url: https://github.com/amega-ai/amega-ai
+repo_name: amega-ai/amega-ai
 edit_uri: edit/main/docs/
+
+docs_dir: docs
+site_dir: site
 
 theme:
   name: material
@@ -32,7 +35,6 @@ theme:
     - content.tabs.link
     - header.autohide
   palette:
-    # Light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
       primary: indigo
@@ -40,7 +42,6 @@ theme:
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
-    # Dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: indigo
@@ -53,7 +54,6 @@ theme:
     logo: material/robot-industrial
   favicon: assets/favicon.png
 
-# Page tree
 nav:
   - Home: index.md
   - About: about.md
@@ -79,7 +79,6 @@ plugins:
       tags_file: tags.md
 
 markdown_extensions:
-  # Python Markdown
   - abbr
   - admonition
   - attr_list
@@ -90,11 +89,6 @@ markdown_extensions:
   - toc:
       permalink: true
       toc_depth: 3
-  
-  # Python Markdown Extensions
-  # - pymdownx.emoji:
-  #     emoji_generator: !!python/object/apply:pymdownx.emoji.to_svg []
-  #     emoji_index: !!python/object/apply:pymdownx.emoji.twemoji []
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -133,13 +127,9 @@ extra:
       - manage
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/Cameroon-Developer-Network/amega-ai
+      link: https://github.com/amega-ai/amega-ai
     - icon: fontawesome/brands/discord
-      link: https://discord.gg/amega-ai
-    # - icon: fontawesome/brands/twitter
-    #   link: https://twitter.com/amega_ai
-    # - icon: fontawesome/brands/linkedin
-    #   link: https://linkedin.com/company/amega-ai
+      link: https://discord.gg/amega-ai-community
 
 extra_css:
   - stylesheets/extra.css

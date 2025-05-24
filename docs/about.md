@@ -89,6 +89,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-- GitHub Issues: [Project Issues](https://github.com/Cameroon-Developer-Network/amega-ai/issues)
+- GitHub Issues: [Project Issues](https://github.com/amega-ai/amega-ai/issues)
 - Email: support@amega-ai.com
-- Community Chat: [Join our Discord](https://discord.gg/amega-ai) 
+- Community Chat: [Join our Discord](https://discord.gg/amega-ai-community) 

@@ -6,7 +6,7 @@ Welcome to the official documentation of Amega AI, an advanced artificial intell
 
 ```bash
 # Clone the repository
-git clone https://github.com/Cameroon-Developer-Network/amega-ai.git
+git clone https://github.com/amega-ai/amega-ai.git
 
 # Set up environment
 cd amega-ai

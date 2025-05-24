@@ -173,7 +173,7 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
-./docs/
+# ./docs/
 .pre-commit-config.yaml
 
 # Logs and local data

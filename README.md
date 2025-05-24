@@ -1,5 +1,5 @@
-![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/Cameroon-Developer-Network/amega-ai?utm_source=oss&utm_medium=github&utm_campaign=Cameroon-Developer-Network%2Famega-ai&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
-[![CI](https://github.com/Cameroon-Developer-Network/amega-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/Cameroon-Developer-Network/amega-ai/actions/workflows/ci.yml)
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/amega-ai/amega-ai?utm_source=oss&utm_medium=github&utm_campaign=amega-ai%2Famega-ai&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+[![CI](https://github.com/amega-ai/amega-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/amega-ai/amega-ai/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/downloads/)
 
@@ -28,7 +28,7 @@ A powerful AI-driven platform for intelligent automation and decision making.
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/Cameroon-Developer-Network/amega-ai.git
+   git clone https://github.com/amega-ai/amega-ai.git
    cd amega-ai
    ```
 

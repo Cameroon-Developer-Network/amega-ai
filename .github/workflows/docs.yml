@@ -36,14 +36,14 @@ jobs:
         run: |
           if [ ! -f "mkdocs.yml" ]; then
             echo "Creating default mkdocs.yml"
-            cat > mkdocs.yml << EOL
-            site_name: Amega AI
-            theme:
-              name: material
-            nav:
-              - Home: index.md
-              - About: about.md
-            EOL
+            {
+              echo "site_name: Amega AI"
+              echo "theme:"
+              echo "  name: material"
+              echo "nav:"
+              echo "  - Home: index.md"
+              echo "  - About: about.md"
+            } > mkdocs.yml
           fi
 
       - name: Ensure docs structure

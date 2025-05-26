@@ -8,7 +8,7 @@ sqlalchemy==2.0.23
 alembic==1.12.1
 pytest==7.4.3
 pytest-cov==4.1.0
-black==23.11.0
+black==24.3.0
 flake8>=6.0.0
 mypy==1.7.0
 isort==5.12.0
@@ -18,9 +18,9 @@ safety>=2.0.0
 # AI/ML Dependencies
 numpy==1.26.2
 pandas==2.1.3
-scikit-learn==1.3.2
+scikit-learn==1.5.1
 tensorflow>=2.12.0
-torch==2.1.1
+torch==2.7.0
 aif360>=0.5.0
 fairlearn>=0.9.0
 great-expectations>=0.16.0
@@ -33,7 +33,7 @@ langchain>=0.0.200
 python-jose>=3.3.0
 cryptography>=40.0.0
 pyjwt>=2.6.0
-requests==2.31.0
+requests==2.32.2
 python-dotenv==1.0.0
 passlib>=1.7.4
 bcrypt>=4.0.0

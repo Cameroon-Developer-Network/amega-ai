@@ -2,29 +2,19 @@ name: Pull Request GPT Review
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, edited, synchronize]
 
 jobs:
-  review:
+  pr-gpt-review:
     runs-on: ubuntu-latest
-    name: Code Review GPT
-    steps:
 
+    steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Run PullRequestGPT
-        uses: pullrequestgpt/actions/pr-gpt-review@v3
-
-      - uses: actions/checkout@v3
+        uses: pullrequestgpt/actions/pr-gpt-review@v2
         with:
-          fetch-depth: 0
-      
-      - name: Code Review GPT
-        uses: mattzcarey/code-review-gpt@main
-
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          MODEL: "gpt-3.5-turbo"
-          LANGUAGE: "en"

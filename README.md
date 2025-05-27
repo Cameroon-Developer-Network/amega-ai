@@ -1,9 +1,5 @@
-![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/Cameroon-Developer-Network/amega-ai?utm_source=oss&utm_medium=github&utm_campaign=Cameroon-Developer-Network%2Famega-ai&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
-[![Code Quality](https://github.com/Cameroon-Developer-Network/amega-ai/actions/workflows/code-quality.yml/badge.svg)](https://github.com/Cameroon-Developer-Network/amega-ai/actions/workflows/code-quality.yml)
-
-[![Documentation](https://github.com/Cameroon-Developer-Network/amega-ai/actions/workflows/docs.yml/badge.svg)](https://github.com/Cameroon-Developer-Network/amega-ai/actions/workflows/docs.yml)
-[![Issue and PR Management](https://github.com/Cameroon-Developer-Network/amega-ai/actions/workflows/issue-pr.yml/badge.svg)](https://github.com/Cameroon-Developer-Network/amega-ai/actions/workflows/issue-pr.yml)
-
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/Cameroon-Developer-Network/amega-ai?utm_source=oss&utm_medium=github&utm_campaign=amega-ai%2Famega-ai&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+[![CI](https://github.com/Cameroon-Developer-Network/amega-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/Cameroon-Developer-Network/amega-ai/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/downloads/)
 
@@ -111,7 +107,10 @@ pytest tests/e2e/
 
 ## 📚 Documentation
 
-- [API Documentation](https://cameroon-developer-network.github.io/amega-ai/)
+- [API Documentation](docs/api/README.md)
+- [User Guide](docs/guides/user-guide.md)
+- [Developer Guide](docs/guides/developer-guide.md)
+- [Contributing Guidelines](CONTRIBUTING.md)
 
 ## 🔄 Development Workflow
 
@@ -154,6 +153,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Create an issue for bug reports or feature requests
 - Join our [Discord community](https://discord.gg/your-server) for discussions
-- Email us at camdev237@gmail.com for other inquiries
+- Email us at support@amega-ai.com for other inquiries
 
 

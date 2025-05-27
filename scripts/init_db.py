@@ -21,33 +21,34 @@ from sqlalchemy.orm import sessionmaker
 # Load environment variables
 load_dotenv()
 
+
 def init_database():
     """Initialize the database with required tables and initial data."""
     try:
         # Get database URL from environment variables
-        db_url = os.getenv('DB_URL')
+        db_url = os.getenv("DB_URL")
         if not db_url:
             print("Error: DB_URL environment variable not set")
             sys.exit(1)
 
         # Create database engine
         engine = create_engine(db_url)
-        
+
         # Import models here to avoid circular imports
         from src.amega_ai.models import Base
-        
+
         # Create all tables
         Base.metadata.create_all(engine)
-        
+
         # Create session
         Session = sessionmaker(bind=engine)
         session = Session()
-        
+
         # Add any initial data here if needed
-        
+
         session.commit()
         print("Database initialized successfully!")
-        
+
     except SQLAlchemyError as e:
         print(f"Error initializing database: {e}")
         sys.exit(1)
@@ -55,9 +56,10 @@ def init_database():
         print(f"Unexpected error: {e}")
         sys.exit(1)
     finally:
-        if 'session' in locals():
+        if "session" in locals():
             session.close()
+
 
 if __name__ == "__main__":
     print("Initializing database...")
-    init_database() 
+    init_database()

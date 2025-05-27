@@ -5,8 +5,10 @@ This module handles configuration loading from environment variables and provide
 type-safe configuration objects.
 """
 from typing import List, Optional
+
+from pydantic import Field, PostgresDsn, RedisDsn, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import Field, PostgresDsn, field_validator, RedisDsn
+
 
 class Settings(BaseSettings):
     """Application settings."""

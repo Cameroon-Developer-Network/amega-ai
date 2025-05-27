@@ -1,6 +1,4 @@
-"""
-Tests for configuration module.
-"""
+"""Tests for configuration module."""
 import pytest
 from pydantic import PostgresDsn
 from backend.config import Settings

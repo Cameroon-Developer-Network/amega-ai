@@ -1,6 +1,4 @@
-"""
-Tests for API models.
-"""
+"""Tests for API models."""
 import pytest
 from datetime import datetime
 from pydantic import ValidationError

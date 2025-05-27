@@ -1,6 +1,4 @@
-"""
-Tests for authentication functionality.
-"""
+"""Tests for authentication functionality."""
 import pytest
 from backend.auth import fake_users_db
 

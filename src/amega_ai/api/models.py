@@ -1,6 +1,4 @@
-"""
-API data models using Pydantic for validation.
-"""
+"""API data models using Pydantic for validation."""
 from datetime import datetime
 from typing import Optional
 

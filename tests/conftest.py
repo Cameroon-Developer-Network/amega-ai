@@ -1,6 +1,4 @@
-"""
-PyTest configuration and fixtures for AMEGA-AI tests.
-"""
+"""PyTest configuration and fixtures for AMEGA-AI tests."""
 import pytest
 from unittest.mock import MagicMock
 from fastapi.testclient import TestClient

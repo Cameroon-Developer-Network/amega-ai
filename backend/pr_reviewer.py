@@ -1,6 +1,4 @@
 from typing import List, Dict, Optional
-import difflib
-from pathlib import Path
 
 class PRReviewer:
     def __init__(self, llm_manager):

@@ -5,7 +5,7 @@ This module sets up the main FastAPI application instance with configuration
 loading from environment variables, CORS middleware, and basic health check endpoint.
 """
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException, status, Depends, Request, Response
+from fastapi import FastAPI, HTTPException, status, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 import uvicorn

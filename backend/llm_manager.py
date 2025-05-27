@@ -12,7 +12,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 from langchain_community.llms import HuggingFacePipeline
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, Field
 
 class ChatMessage(BaseModel):
     """Model for chat messages."""

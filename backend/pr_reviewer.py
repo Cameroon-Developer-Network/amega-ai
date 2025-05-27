@@ -36,7 +36,8 @@ class PRReviewer:
         
         return self._parse_review_response(review_response)
     
-    def _prepare_review_prompt(self, diff_content: str) -> str:
+    @staticmethod
+    def _prepare_review_prompt(diff_content: str) -> str:
         """
         Constructs a detailed prompt instructing the LLM to review code changes for issues, style, performance, security, and suggestions.
         
@@ -73,7 +74,8 @@ SUGGESTIONS:
 - [List specific improvement suggestions]
 """
     
-    def _parse_review_response(self, response: str) -> Dict:
+    @staticmethod
+    def _parse_review_response(response: str) -> Dict:
         """
         Parses the LLM's review response into categorized lists of feedback.
         

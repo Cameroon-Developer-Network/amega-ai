@@ -14,13 +14,15 @@ class MockLLMManager:
         self.memory = MagicMock()
         self.memory.chat_memory.messages = []
     
-    async def chat(self, message: ChatMessage) -> ChatMessage:
+    @staticmethod
+    async def chat(message: ChatMessage) -> ChatMessage:
         return ChatMessage(
             role="assistant",
             content="This is a mock response"
         )
     
-    def get_conversation_history(self):
+    @staticmethod
+    def get_conversation_history():
         return []
 
 @pytest.fixture

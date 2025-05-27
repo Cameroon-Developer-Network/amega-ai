@@ -32,11 +32,13 @@ class RateLimiter:
             "chat": RateLimitConfig(requests=50, window_seconds=60),  # 50 chat requests per minute
         }
     
-    def _get_window_key(self, identifier: str, window_start: int) -> str:
+    @staticmethod
+    def _get_window_key(identifier: str, window_start: int) -> str:
         """Generate Redis key for the rate limit window."""
         return f"rate_limit:{identifier}:{window_start}"
     
-    def _get_window_start(self, window_seconds: int) -> int:
+    @staticmethod
+    def _get_window_start(window_seconds: int) -> int:
         """Get the start timestamp of the current window."""
         now = int(datetime.utcnow().timestamp())
         return now - (now % window_seconds)

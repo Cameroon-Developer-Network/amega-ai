@@ -34,7 +34,7 @@ async def lifespan(app: FastAPI):
     """Lifespan events for FastAPI application."""
     # Startup
     app.state.llm_manager = LLMManager(model_name=settings.MODEL_NAME)
-    
+
     # Initialize rate limiter
     app.state.rate_limiter = RateLimiter(
         redis_url=str(settings.REDIS_URL),
@@ -95,13 +95,13 @@ async def register_user(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Username already registered"
         )
-    
+
     # Create a new user with hashed password
     hashed_password = get_password_hash("default-password")  # In production, get password from request
     user_dict = user.model_dump()
     user_dict["hashed_password"] = hashed_password
     fake_users_db[user.username] = user_dict
-    
+
     return user
 
 @app.post("/api/v1/auth/token", response_model=Token)
@@ -117,12 +117,12 @@ async def login_for_access_token(
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    
+
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
     )
-    
+
     return {"access_token": access_token, "token_type": "bearer"}
 
 @app.get("/api/v1/users/me", response_model=User)
@@ -142,7 +142,7 @@ async def chat_completion(
 ):
     """
     Chat completion endpoint.
-    
+
     This endpoint processes a chat message and returns an AI-generated response.
     The conversation history is maintained for context-aware responses.
     """

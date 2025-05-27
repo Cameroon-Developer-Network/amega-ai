@@ -26,20 +26,20 @@ COLORS = {
 def _sanitize_context(context: Dict[str, Any]) -> Dict[str, Any]:
     """
     Sanitize sensitive information from the logging context.
-    
+
     Args:
         context: Dictionary containing context information
-        
+
     Returns:
         Dict with sensitive information redacted
     """
     SENSITIVE_KEYS = {'password', 'token', 'secret', 'key', 'auth', 'api_key', 'apikey', 'credential'}
     sanitized = context.copy()
-    
+
     def _should_redact(key: str) -> bool:
         key_lower = key.lower()
         return any(sensitive in key_lower for sensitive in SENSITIVE_KEYS)
-    
+
     def _redact_dict(d: Dict[str, Any]) -> Dict[str, Any]:
         result = {}
         for k, v in d.items():
@@ -52,49 +52,49 @@ def _sanitize_context(context: Dict[str, Any]) -> Dict[str, Any]:
             else:
                 result[k] = v
         return result
-    
+
     return _redact_dict(sanitized)
 
 class ColoredFormatter(logging.Formatter):
     """Custom formatter adding colors to log levels and structured information."""
-    
+
     def format(self, record: logging.LogRecord) -> str:
         """Format log record with colors and additional context."""
         # Add timestamp with milliseconds
         record.timestamp = datetime.fromtimestamp(record.created).strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
-        
+
         # Add color to level name
         level_color = COLORS.get(record.levelname, COLORS['RESET'])
         record.colored_levelname = f"{level_color}{record.levelname}{COLORS['RESET']}"
-        
+
         # Add process and thread information
         record.process_info = f"[Process:{record.process}|Thread:{record.thread}]"
-        
+
         # Add component/module path
         record.component = record.module
         if record.funcName != '<module>':
             record.component = f"{record.module}.{record.funcName}"
-        
+
         # Format the message
         message = super().format(record)
-        
+
         # Add contextual information if available
         if hasattr(record, 'extra_context'):
             message += f"\nContext: {record.extra_context}"
-            
+
         return message
 
 class SanitizingLoggerAdapter(logging.LoggerAdapter):
     """Logger adapter that sanitizes sensitive information from extra context."""
-    
+
     def process(self, msg: str, kwargs: Dict[str, Any]) -> tuple[str, Dict[str, Any]]:
         """
         Process the logging message and keyword arguments.
-        
+
         Args:
             msg: The message to log
             kwargs: Keyword arguments for the logging call
-            
+
         Returns:
             Tuple of (message, keyword arguments) with sanitized context
         """
@@ -112,12 +112,12 @@ def setup_logging(
 ) -> logging.Logger:
     """
     Set up logging configuration with console and file handlers.
-    
+
     Args:
         log_level: The logging level (default: INFO)
         log_file: Path to the log file (default: None)
         component_name: Name of the component being logged (default: "amega_ai")
-    
+
     Returns:
         logging.Logger: Configured logger instance
     """
@@ -126,14 +126,14 @@ def setup_logging(
         log_dir = os.path.dirname(log_file)
         if log_dir:
             Path(log_dir).mkdir(parents=True, exist_ok=True)
-    
+
     # Create logger
     logger = logging.getLogger(component_name)
     logger.setLevel(log_level)
-    
+
     # Remove existing handlers
     logger.handlers.clear()
-    
+
     # Console Handler with colored output
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setLevel(log_level)
@@ -143,7 +143,7 @@ def setup_logging(
     )
     console_handler.setFormatter(ColoredFormatter(console_format))
     logger.addHandler(console_handler)
-    
+
     # File Handler with detailed output
     if log_file:
         file_handler = logging.handlers.RotatingFileHandler(
@@ -161,23 +161,23 @@ def setup_logging(
         )
         file_handler.setFormatter(logging.Formatter(file_format, datefmt='%Y-%m-%d %H:%M:%S'))
         logger.addHandler(file_handler)
-    
+
     # Log startup information
     logger.info(f"Logging initialized for {component_name}")
     logger.info(f"Log level set to {logging.getLevelName(log_level)}")
     if log_file:
         logger.info(f"Log file: {os.path.abspath(log_file)}")
-    
+
     return logger
 
 def get_logger(component_name: str = "amega_ai", extra_context: Optional[Union[dict, str]] = None) -> logging.Logger:
     """
     Get a logger instance with optional context information.
-    
+
     Args:
         component_name: Name of the component requesting the logger
         extra_context: Additional context to include in logs
-    
+
     Returns:
         logging.Logger: Logger instance with context
     """

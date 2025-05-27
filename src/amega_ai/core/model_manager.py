@@ -11,7 +11,7 @@ from ..utils.logging_config import get_logger
 
 class ModelManager:
     """Manages ML models lifecycle including loading, training, and inference."""
-    
+
     def __init__(self, model_dir: str = "models"):
         self.model_dir = model_dir
         self.logger = get_logger(
@@ -19,7 +19,7 @@ class ModelManager:
             extra_context={"model_dir": model_dir}
         )
         self._initialize()
-    
+
     def _initialize(self):
         """Initialize the model manager and required directories."""
         self.logger.info(
@@ -31,7 +31,7 @@ class ModelManager:
                 }
             }
         )
-        
+
         try:
             os.makedirs(self.model_dir, exist_ok=True)
             self.logger.debug(f"Model directory created/verified: {self.model_dir}")
@@ -42,15 +42,15 @@ class ModelManager:
                 extra={"extra_context": {"error": str(e)}}
             )
             raise
-    
+
     def load_model(self, model_name: str, version: Optional[str] = None) -> Dict[str, Any]:
         """
         Load a model from the model directory.
-        
+
         Args:
             model_name: Name of the model to load
             version: Specific version to load (default: latest)
-            
+
         Returns:
             Dict containing model information and artifacts
         """
@@ -65,17 +65,17 @@ class ModelManager:
                 }
             }
         )
-        
+
         try:
             # Simulate model loading
             time.sleep(1)  # Simulated loading time
-            
+
             model_info = {
                 "name": model_name,
                 "version": version or "latest",
                 "status": "loaded"
             }
-            
+
             load_time = time.time() - start_time
             self.logger.info(
                 f"Model {model_name} loaded successfully",
@@ -86,9 +86,9 @@ class ModelManager:
                     }
                 }
             )
-            
+
             return model_info
-            
+
         except Exception as e:
             self.logger.error(
                 f"Failed to load model: {model_name}",
@@ -102,7 +102,7 @@ class ModelManager:
                 }
             )
             raise
-    
+
     def train_model(
         self,
         model_name: str,
@@ -111,12 +111,12 @@ class ModelManager:
     ) -> Dict[str, Any]:
         """
         Train a new model or retrain an existing one.
-        
+
         Args:
             model_name: Name of the model to train
             training_data: Training data and configuration
             hyperparameters: Model hyperparameters
-            
+
         Returns:
             Dict containing training results and metrics
         """
@@ -132,14 +132,14 @@ class ModelManager:
                 }
             }
         )
-        
+
         try:
             # Simulate training process with progress updates
             epochs = hyperparameters.get("epochs", 10)
             for epoch in range(epochs):
                 # Simulate epoch training
                 time.sleep(0.5)
-                
+
                 # Log progress with metrics
                 self.logger.debug(
                     f"Epoch {epoch + 1}/{epochs} completed",
@@ -152,7 +152,7 @@ class ModelManager:
                         }
                     }
                 )
-            
+
             training_time = time.time() - start_time
             results = {
                 "model_name": model_name,
@@ -160,7 +160,7 @@ class ModelManager:
                 "epochs_completed": epochs,
                 "final_accuracy": 0.9  # Simulated final accuracy
             }
-            
+
             self.logger.info(
                 f"Model {model_name} trained successfully",
                 extra={
@@ -170,9 +170,9 @@ class ModelManager:
                     }
                 }
             )
-            
+
             return results
-            
+
         except Exception as e:
             self.logger.error(
                 f"Training failed for model: {model_name}",

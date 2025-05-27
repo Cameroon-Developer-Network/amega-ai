@@ -13,13 +13,13 @@ class MockLLMManager:
     def __init__(self, *args, **kwargs):
         self.memory = MagicMock()
         self.memory.chat_memory.messages = []
-    
+
     async def chat(self, message: ChatMessage) -> ChatMessage:
         return ChatMessage(
             role="assistant",
             content="This is a mock response"
         )
-    
+
     def get_conversation_history(self):
         return []
 

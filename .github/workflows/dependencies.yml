@@ -2,6 +2,12 @@ name: Dependency Management
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'requirements.txt'
+      - 'requirements/*.txt'
+      - '.github/workflows/dependencies.yml'
+    types: [opened, synchronize, reopened]
 
 jobs:
   check-dependencies:
@@ -34,18 +40,24 @@ jobs:
         run: |
           if [ -f "requirements.txt" ]; then
             echo "Checking requirements.txt format..."
-            pip check requirements.txt || echo "Requirements check failed but continuing..."
+            if ! pip check requirements.txt; then
+              echo "::error::Requirements check failed"
+              exit 1
+            fi
+            echo "Requirements check passed successfully"
           else
             echo "No requirements.txt found, skipping check"
           fi
-        continue-on-error: true
 
       - name: Check for known vulnerabilities
         if: success() || failure()
         run: |
           if command -v safety &> /dev/null && [ -f "requirements.txt" ]; then
-            safety check -r requirements.txt --full-report || echo "Safety check failed but continuing..."
+            if ! safety check -r requirements.txt --full-report; then
+              echo "::error::Security vulnerabilities found in dependencies"
+              exit 1
+            fi
+            echo "Security check passed successfully - no known vulnerabilities found"
           else
             echo "Safety check skipped - tool or requirements not available"
-          fi
-        continue-on-error: true 
+          fi 

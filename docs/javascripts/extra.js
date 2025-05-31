@@ -26,17 +26,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add external link icons
+    // Add external link icons (without forcing new tabs)
     document.querySelectorAll('a[href^="http"]').forEach(link => {
-        if (!link.hostname.includes('amega-ai')) {
-            link.setAttribute('target', '_blank');
-            link.setAttribute('rel', 'noopener');
-            if (!link.classList.contains('md-social__link')) {
-                const icon = document.createElement('span');
-                icon.classList.add('external-link-icon');
-                icon.innerHTML = ' ↗';
-                link.appendChild(icon);
-            }
+        if (!link.hostname.includes('amega-ai') && !link.classList.contains('md-social__link')) {
+            const icon = document.createElement('span');
+            icon.classList.add('external-link-icon');
+            icon.innerHTML = ' ↗';
+            link.appendChild(icon);
         }
     });
 

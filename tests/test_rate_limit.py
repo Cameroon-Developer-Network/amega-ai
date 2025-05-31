@@ -2,14 +2,11 @@
 Tests for rate limiting functionality.
 """
 import pytest
-from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
-import redis
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 from backend.rate_limit import RateLimiter, RateLimitConfig, rate_limit_dependency
-from backend.config import settings
 
 @pytest.fixture
 def redis_mock():

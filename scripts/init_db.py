@@ -32,22 +32,22 @@ def init_database():
 
         # Create database engine
         engine = create_engine(db_url)
-        
+
         # Import models here to avoid circular imports
         from src.amega_ai.models import Base
-        
+
         # Create all tables
         Base.metadata.create_all(engine)
-        
+
         # Create session
         Session = sessionmaker(bind=engine)
         session = Session()
-        
+
         # Add any initial data here if needed
-        
+
         session.commit()
         print("Database initialized successfully!")
-        
+
     except SQLAlchemyError as e:
         print(f"Error initializing database: {e}")
         sys.exit(1)

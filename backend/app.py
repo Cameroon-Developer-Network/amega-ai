@@ -5,7 +5,7 @@ This module sets up the main FastAPI application instance with configuration
 loading from environment variables, CORS middleware, and basic health check endpoint.
 """
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException, status, Depends, Request, Response
+from fastapi import FastAPI, HTTPException, status, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 import uvicorn
@@ -20,6 +20,10 @@ from .auth import (
     ACCESS_TOKEN_EXPIRE_MINUTES
 )
 from .rate_limit import RateLimiter, rate_limit_dependency, RateLimitConfig
+from .security import (
+    SecurityMiddleware, RBACMiddleware, RequestValidationMiddleware,
+    requires_admin, requires_user
+)
 from .config import settings
 
 # Configure logging
@@ -34,7 +38,7 @@ async def lifespan(app: FastAPI):
     """Lifespan events for FastAPI application."""
     # Startup
     app.state.llm_manager = LLMManager(model_name=settings.MODEL_NAME)
-    
+
     # Initialize rate limiter
     app.state.rate_limiter = RateLimiter(
         redis_url=str(settings.REDIS_URL),
@@ -64,6 +68,11 @@ app = FastAPI(
     description="A powerful AI-driven platform for intelligent automation and decision making.",
     lifespan=lifespan
 )
+
+# Add security middleware
+app.add_middleware(SecurityMiddleware)
+app.add_middleware(RBACMiddleware)
+app.add_middleware(RequestValidationMiddleware)
 
 # Configure CORS middleware
 app.add_middleware(
@@ -95,13 +104,14 @@ async def register_user(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Username already registered"
         )
-    
+
     # Create a new user with hashed password
     hashed_password = get_password_hash("default-password")  # In production, get password from request
     user_dict = user.model_dump()
     user_dict["hashed_password"] = hashed_password
+    user_dict["role"] = "user"  # Default role for new users
     fake_users_db[user.username] = user_dict
-    
+
     return user
 
 @app.post("/api/v1/auth/token", response_model=Token)
@@ -117,14 +127,15 @@ async def login_for_access_token(
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    
+
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
     )
-    
+
     return {"access_token": access_token, "token_type": "bearer"}
 
+# Protected endpoints
 @app.get("/api/v1/users/me", response_model=User)
 async def read_users_me(
     current_user: User = Depends(get_current_active_user),
@@ -133,54 +144,36 @@ async def read_users_me(
     """Get current user information."""
     return current_user
 
-# Protected chat endpoints
-@app.post("/api/v1/chat", response_model=ChatMessage)
-async def chat_completion(
-    message: ChatMessage,
-    current_user: User = Depends(get_current_active_user),
-    rate_limit: dict = Depends(rate_limit_dependency("chat"))
-):
-    """
-    Chat completion endpoint.
-    
-    This endpoint processes a chat message and returns an AI-generated response.
-    The conversation history is maintained for context-aware responses.
-    """
-    try:
-        logger.info(f"Received chat message from user {current_user.username}: {message.content}")
-        response = await app.state.llm_manager.chat(message)
-        logger.info(f"Generated response: {response.content}")
-        return response
-    except Exception as e:
-        logger.error(f"Error in chat completion: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="An error occurred while processing your request."
-        )
-
-@app.get("/api/v1/chat/history", response_model=List[ChatMessage])
-async def get_chat_history(
-    current_user: User = Depends(get_current_active_user),
+@app.get("/api/v1/users", response_model=List[User])
+async def list_users(
+    current_user: User = Depends(requires_admin),
     rate_limit: dict = Depends(rate_limit_dependency("authenticated"))
 ):
-    """Retrieve the conversation history."""
-    try:
-        return app.state.llm_manager.get_conversation_history()
-    except Exception as e:
-        logger.error(f"Error retrieving chat history: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="An error occurred while retrieving the chat history."
-        )
+    """List all users (admin only)."""
+    return list(fake_users_db.values())
 
-@app.get("/health", status_code=status.HTTP_200_OK)
-async def health_check(rate_limit: dict = Depends(rate_limit_dependency())):
-    """Health check endpoint to verify API status."""
+@app.post("/api/v1/chat", response_model=ChatMessage)
+async def chat(
+    message: ChatMessage,
+    current_user: User = Depends(requires_user),
+    rate_limit: dict = Depends(rate_limit_dependency("chat"))
+):
+    """Chat with the AI model."""
+    response = await app.state.llm_manager.generate_response(message.content)
+    return ChatMessage(
+        content=response,
+        timestamp=datetime.utcnow(),
+        user_id=current_user.username
+    )
+
+# Health check endpoint (public)
+@app.get("/health")
+async def health_check():
+    """Health check endpoint."""
     return {
         "status": "healthy",
-        "timestamp": datetime.utcnow().isoformat(),
-        "version": settings.APP_VERSION,
-        "service": settings.APP_NAME
+        "timestamp": datetime.utcnow(),
+        "version": settings.APP_VERSION
     }
 
 @app.get("/")

@@ -1,46 +1,76 @@
-# Amega AI Configuration Example
+# AMEGA AI Configuration Example
 
-# Basic Settings
+# Application Settings
 app:
-  name: Amega AI
-  environment: development  # development, staging, production, testing
+  name: AMEGA-AI
   version: 0.1.0
+  debug: false
 
-# API Settings
-api:
+# Server Settings
+server:
   host: 0.0.0.0
   port: 8000
-  debug: false
-  root_path: ""
-  docs_url: /docs
-  openapi_url: /openapi.json
+  allowed_origins:
+    - http://localhost:3000
+    - http://localhost:8000
 
 # Database Settings
 database:
-  url: postgresql://user:password@localhost:5432/amega_ai
-  pool_size: 5
-  max_overflow: 10
-  echo: false
+  url: postgresql://user:password@localhost:5432/amega  # Optional
 
-# Security Settings
-security:
-  jwt_secret_key: your-secret-key-here
-  jwt_algorithm: HS256
-  access_token_expire_minutes: 30
-  cors_origins:
-    - http://localhost
-    - http://localhost:3000
-  ssl_keyfile: null
-  ssl_certfile: null
+# Redis Settings
+redis:
+  url: redis://localhost:6379
 
 # LLM Settings
 llm:
-  backend: ollama  # ollama, openai, anthropic
-  api_key: null
-  api_url: null
-  default_model: llama2
-  max_tokens: 1000
-  temperature: 0.7
+  # Active Backend Selection (huggingface, openai, anthropic, ollama)
+  active_backend: huggingface
+  
+  # Backend Configurations
+  backends:
+    huggingface:
+      model_name: microsoft/DialoGPT-medium
+      api_key: your-huggingface-api-key
+      timeout: 30
+    
+    openai:
+      model_name: gpt-3.5-turbo
+      api_key: your-openai-api-key
+      organization_id: your-org-id
+      timeout: 30
+    
+    anthropic:
+      model_name: claude-3-opus-20240229
+      api_key: your-anthropic-api-key
+      timeout: 30
+    
+    ollama:
+      model_name: llama2
+      api_base: http://localhost:11434
+      timeout: 30
+  
+  # Generation Parameters
+  generation:
+    temperature: 0.7  # Controls randomness (0.0 to 1.0)
+    max_length: 1000  # Maximum length of generated text
+    top_p: 0.9  # Nucleus sampling parameter
+    repetition_penalty: 1.2  # Penalty for repeating tokens
+    top_k: 50  # Number of tokens to consider
+    presence_penalty: 0.0  # Penalty based on token presence (-2.0 to 2.0)
+    frequency_penalty: 0.0  # Penalty based on token frequency (-2.0 to 2.0)
+
+# Security Settings
+security:
+  secret_key: your-secret-key-please-change-in-production
+  algorithm: HS256
+  access_token_expire_minutes: 30
+
+# Rate Limiting Settings
+rate_limit:
+  default_rpm: 100  # Default requests per minute
+  auth_rpm: 1000  # Authenticated requests per minute
+  chat_rpm: 50  # Chat requests per minute
 
 # Logging Settings
 logging:
@@ -49,13 +79,6 @@ logging:
   format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
   max_bytes: 10485760  # 10MB
   backup_count: 5
-
-# Redis Settings
-redis:
-  url: redis://localhost:6379
-  password: null
-  ssl: false
-  ssl_cert_reqs: null
 
 # Directory Settings
 directories:

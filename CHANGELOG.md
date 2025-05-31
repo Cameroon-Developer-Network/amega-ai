@@ -9,15 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Initial project setup
-- GitHub workflows for CI/CD
-- AI model management workflows
-- Data management workflows
-- Security and compliance workflows
-- Documentation workflows
-- Monitoring workflows
+- Backend security implementation with role-based access control (RBAC)
+- Role hierarchy system with admin, moderator, and user roles
+- Security test suite for RBAC functionality
+- DeepSource integration for code quality
 
 ### Changed
-- N/A
+- Updated DeepSource configuration for Python and Shell analysis
+- Simplified .deepsource.toml configuration
+- Fixed role hierarchy implementation in security middleware
 
 ### Deprecated
 - N/A
@@ -29,4 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - N/A
 
 ### Security
-- N/A 
+- Implemented role-based access control (RBAC) middleware
+- Added security headers middleware
+- Created role hierarchy with proper permission inheritance 

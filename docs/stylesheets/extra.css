@@ -1,0 +1,245 @@
+/* Custom CSS for Amega AI Documentation */
+
+/* Enhance readability */
+.md-typeset {
+    font-size: 0.75rem;
+    line-height: 1.6;
+}
+
+/* Better code blocks */
+.highlight {
+    background-color: var(--md-code-bg-color);
+    border-radius: 4px;
+}
+
+.highlight pre {
+    padding: 1em;
+    margin: 0;
+    overflow: auto;
+}
+
+/* Custom admonitions */
+.md-typeset .admonition,
+.md-typeset details {
+    border-width: 0;
+    border-left-width: 4px;
+    border-radius: 4px;
+}
+
+/* Enhance tables */
+.md-typeset table:not([class]) {
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.md-typeset table:not([class]) th {
+    background-color: var(--md-primary-fg-color);
+    color: var(--md-primary-bg-color);
+}
+
+/* Better navigation */
+.md-nav__item .md-nav__link--active {
+    font-weight: bold;
+    color: var(--md-primary-fg-color);
+}
+
+/* Enhanced buttons */
+.md-button {
+    transition: all .2s ease-in-out;
+}
+
+.md-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,.1);
+}
+
+/* Custom hero section */
+.md-typeset h1 {
+    color: var(--md-primary-fg-color);
+    font-weight: bold;
+    font-size: 2.5em;
+    margin-bottom: 1em;
+}
+
+/* Better spacing for content */
+.md-content__inner {
+    margin: 0 .8rem 1.2rem;
+    padding-top: 1.2rem;
+}
+
+/* Custom cards */
+.md-typeset .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    grid-gap: 1rem;
+    margin: 1em 0;
+}
+
+.md-typeset .grid.cards > :is(ul, ol) {
+    display: contents;
+}
+
+.md-typeset .grid.cards > :is(ul, ol) > li,
+.md-typeset .grid > .card {
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    padding: 1rem;
+    transition: all .2s ease-in-out;
+}
+
+.md-typeset .grid.cards > :is(ul, ol) > li:hover,
+.md-typeset .grid > .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,.15);
+}
+
+/* Custom announcement bar */
+.md-announce {
+    background-color: var(--md-primary-fg-color);
+    color: var(--md-primary-bg-color);
+}
+
+/* Custom footer */
+.md-footer {
+    background-color: var(--md-primary-fg-color--dark);
+}
+
+.md-footer-meta {
+    background-color: var(--md-primary-fg-color--darker);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--md-code-bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--md-primary-fg-color--light);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--md-primary-fg-color);
+}
+
+/* Grid Cards */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    grid-gap: 1rem;
+    margin: 1rem 0;
+}
+
+.grid.cards > :is(ul, ol) {
+    display: contents;
+}
+
+.grid.cards > :is(ul, ol) > li,
+.grid > .card {
+    border-radius: 0.5rem;
+    box-shadow: var(--md-shadow-z2);
+    display: block;
+    margin: 0;
+    padding: 1rem;
+    transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.grid.cards > :is(ul, ol) > li:hover,
+.grid > .card:hover {
+    transform: translateY(-0.2rem);
+    box-shadow: var(--md-shadow-z3);
+}
+
+.grid.cards > :is(ul, ol) > li > :first-child,
+.grid > .card > :first-child {
+    margin-top: 0;
+}
+
+.grid.cards > :is(ul, ol) > li > :last-child,
+.grid > .card > :last-child {
+    margin-bottom: 0;
+}
+
+/* Custom Styling */
+:root {
+    --md-primary-fg-color: #6200ea;
+    --md-primary-fg-color--light: #b388ff;
+    --md-primary-fg-color--dark: #4a148c;
+    --md-accent-fg-color: #7c4dff;
+}
+
+/* Typography */
+.md-typeset h1 {
+    font-weight: 700;
+    color: var(--md-primary-fg-color);
+}
+
+.md-typeset h2 {
+    font-weight: 600;
+}
+
+/* Links */
+.md-typeset a {
+    color: var(--md-accent-fg-color);
+    transition: color 0.25s;
+}
+
+.md-typeset a:hover {
+    color: var(--md-primary-fg-color);
+}
+
+/* Code blocks */
+.md-typeset code {
+    background-color: var(--md-code-bg-color);
+    border-radius: 0.2rem;
+    padding: 0.2em 0.4em;
+}
+
+/* Admonitions */
+.md-typeset .admonition {
+    border-radius: 0.5rem;
+    box-shadow: var(--md-shadow-z1);
+}
+
+/* Navigation */
+.md-nav__link:hover {
+    color: var(--md-accent-fg-color);
+}
+
+/* Tables */
+.md-typeset table:not([class]) {
+    border-radius: 0.5rem;
+    box-shadow: var(--md-shadow-z1);
+    overflow: hidden;
+}
+
+.md-typeset table:not([class]) th {
+    background-color: var(--md-primary-fg-color);
+    color: var(--md-primary-bg-color);
+}
+
+/* Buttons */
+.md-button {
+    border-radius: 0.3rem;
+    transition: all 0.25s;
+}
+
+.md-button:hover {
+    transform: translateY(-0.1rem);
+    box-shadow: var(--md-shadow-z2);
+}
+
+/* Search */
+.md-search__form {
+    border-radius: 0.5rem;
+}
+
+/* Footer */
+.md-footer {
+    background-color: var(--md-primary-fg-color--dark);
+} 

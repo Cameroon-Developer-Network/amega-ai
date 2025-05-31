@@ -1,0 +1,145 @@
+site_name: Amega AI
+site_url: https://github.com/Cameroon-Developer-Network/amega-ai.git
+repo_url: https://github.com/Cameroon-Developer-Network/amega-ai.git
+repo_name: amega-ai/
+edit_uri: edit/main/docs/
+
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.prune
+    - toc.follow
+    - toc.integrate
+    - search.highlight
+    - search.share
+    - search.suggest
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.tooltips
+    - content.tabs.link
+    - header.autohide
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/robot-industrial
+  favicon: assets/favicon.png
+
+nav:
+  - Home: index.md
+  - About: about.md
+  - API Documentation: 
+    - Overview: api/index.md
+    - Authentication: api/auth.md
+    - Endpoints: api/endpoints.md
+    - Examples: api/examples.md
+    - Reference: api/reference.md
+  - Guides:
+    - Getting Started: guides/getting-started.md
+    - Installation: guides/installation.md
+    - Configuration: guides/configuration.md
+    - Best Practices: guides/best-practices.md
+    - AI Models: guides/ai-models.md
+    - Security: guides/security.md
+    - Monitoring: guides/monitoring.md
+    - MLOps: guides/mlops.md
+    - Troubleshooting: guides/troubleshooting.md
+  - Development:
+    - Contributing: CONTRIBUTING.md
+    - Code Style: development/code-style.md
+    - Testing: development/testing.md
+    - Architecture: development/architecture.md
+
+plugins:
+  - search
+  - tags
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - meta
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - tables
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.betterem:
+      smart_enable: all
+
+extra:
+  analytics:
+    provider: google
+    property: G-1234567890
+  consent:
+    title: Cookie consent
+    description: >- 
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better.
+    actions:
+      - accept
+      - reject
+      - manage
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Cameroon-Developer-Network/amega-ai
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/amega-ai
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/extra.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js 

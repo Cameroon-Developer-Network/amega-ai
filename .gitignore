@@ -146,6 +146,7 @@ venv.bak/
 # mkdocs documentation
 /site
 
+
 # mypy
 .mypy_cache/
 .dmypy.json
@@ -172,3 +173,47 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+# ./docs/
+.pre-commit-config.yaml
+
+# Logs and local data
+logs/
+*.log.*
+log/
+
+# Model files and data
+models/
+*.pkl
+*.h5
+*.pt
+*.pth
+*.onnx
+*.pb
+*.tflite
+*.mlmodel
+
+# Docker
+.docker/
+docker-compose.override.yml
+.env.docker
+
+# IDE - VSCode
+.vscode/
+*.code-workspace
+.settings/
+
+# IDE - Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Local development
+.local/
+*.local
+.env.local
+.env.*.local
+.env.*
+
+# System files
+.DS_Store
+Thumbs.db
+SECURITY.md

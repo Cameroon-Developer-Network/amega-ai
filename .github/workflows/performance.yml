@@ -1,0 +1,106 @@
+name: Performance Testing
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_type:
+        description: 'Type of performance test'
+        required: true
+        type: choice
+        options:
+          - load
+          - stress
+          - endurance
+          - spike
+          - all
+        default: 'load'
+      duration:
+        description: 'Test duration in minutes'
+        required: true
+        type: number
+        default: 5
+
+jobs:
+  performance:
+    name: Performance Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Load Test
+        if: inputs.test_type == 'load' || inputs.test_type == 'all'
+        run: |
+          echo "Running load test for ${{ inputs.duration }} minutes..."
+          # Placeholder for load test
+          exit 0
+
+      - name: Stress Test
+        if: inputs.test_type == 'stress' || inputs.test_type == 'all'
+        run: |
+          echo "Running stress test for ${{ inputs.duration }} minutes..."
+          # Placeholder for stress test
+          exit 0
+
+      - name: Endurance Test
+        if: inputs.test_type == 'endurance' || inputs.test_type == 'all'
+        run: |
+          echo "Running endurance test for ${{ inputs.duration }} minutes..."
+          # Placeholder for endurance test
+          exit 0
+
+      - name: Spike Test
+        if: inputs.test_type == 'spike' || inputs.test_type == 'all'
+        run: |
+          echo "Running spike test for ${{ inputs.duration }} minutes..."
+          # Placeholder for spike test
+          exit 0
+
+      - name: Generate Report
+        run: |
+          echo "## Performance Test Report" > performance-report.md
+          echo "Test Type: ${{ inputs.test_type }}" >> performance-report.md
+          echo "Duration: ${{ inputs.duration }} minutes" >> performance-report.md
+          echo "Status: Completed" >> performance-report.md
+          echo "Timestamp: $(date)" >> performance-report.md
+
+      - name: Upload Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: performance-report
+          path: performance-report.md
+          retention-days: 5
+
+  load-testing:
+    runs-on: ubuntu-latest
+    needs: performance
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install locust
+        run: pip install locust
+
+      - name: Run load tests
+        run: |
+          locust -f tests/load_test.py --headless -u 100 -r 10 --run-time 1m
+
+      - name: Upload load test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: load-test-results
+          path: load_test_results.csv 

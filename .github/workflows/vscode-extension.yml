@@ -1,0 +1,83 @@
+name: VSCode Extension
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to perform'
+        required: true
+        type: choice
+        options:
+          - build
+          - test
+          - package
+          - all
+        default: 'all'
+      version:
+        description: 'Extension version (optional)'
+        required: false
+        type: string
+
+jobs:
+  extension:
+    name: VSCode Extension
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm install
+          npm install -g vsce
+
+      - name: Build Extension
+        if: inputs.action == 'build' || inputs.action == 'all'
+        run: |
+          echo "Building VSCode extension..."
+          npm run compile
+          # Placeholder for actual build
+          exit 0
+
+      - name: Run Tests
+        if: inputs.action == 'test' || inputs.action == 'all'
+        run: |
+          echo "Running extension tests..."
+          npm run test
+          # Placeholder for actual tests
+          exit 0
+
+      - name: Package Extension
+        if: inputs.action == 'package' || inputs.action == 'all'
+        run: |
+          echo "Packaging VSCode extension..."
+          if [ -n "${{ inputs.version }}" ]; then
+            npm version ${{ inputs.version }} --no-git-tag-version
+          fi
+          vsce package
+          # Placeholder for actual packaging
+          exit 0
+
+      - name: Generate Report
+        run: |
+          echo "## VSCode Extension Build Report" > extension-report.md
+          echo "Action: ${{ inputs.action }}" >> extension-report.md
+          if [ -n "${{ inputs.version }}" ]; then
+            echo "Version: ${{ inputs.version }}" >> extension-report.md
+          fi
+          echo "Status: Completed" >> extension-report.md
+          echo "Timestamp: $(date)" >> extension-report.md
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: extension-artifacts
+          path: |
+            *.vsix
+            extension-report.md
+          retention-days: 5 

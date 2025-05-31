@@ -1,0 +1,93 @@
+name: Release Management
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: 'Type of version bump'
+        required: true
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+        default: 'patch'
+      release_notes:
+        description: 'Release notes'
+        required: false
+        type: string
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install build twine
+
+      - name: Determine version
+        id: version
+        run: |
+          current_version=$(python setup.py --version)
+          IFS='.' read -r major minor patch <<< "$current_version"
+          
+          case "${{ inputs.version_type }}" in
+            major)
+              new_version="$((major + 1)).0.0"
+              ;;
+            minor)
+              new_version="${major}.$((minor + 1)).0"
+              ;;
+            patch)
+              new_version="${major}.${minor}.$((patch + 1))"
+              ;;
+          esac
+          
+          echo "new_version=${new_version}" >> $GITHUB_OUTPUT
+          echo "current_version=${current_version}" >> $GITHUB_OUTPUT
+
+      - name: Build Package
+        run: |
+          python -m build
+          twine check dist/*
+
+      - name: Create Release Notes
+        run: |
+          echo "# Release v${{ steps.version.outputs.new_version }}" > release-notes.md
+          echo "" >> release-notes.md
+          if [ -n "${{ inputs.release_notes }}" ]; then
+            echo "${{ inputs.release_notes }}" >> release-notes.md
+          else
+            echo "## What's Changed" >> release-notes.md
+            git log --pretty=format:"* %s" ${{ steps.version.outputs.current_version }}..HEAD >> release-notes.md
+          fi
+
+      - name: Create Release
+        run: |
+          echo "Would create release v${{ steps.version.outputs.new_version }}"
+          echo "Release notes:"
+          cat release-notes.md
+          # Placeholder for actual release
+          exit 0
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-artifacts
+          path: |
+            dist/
+            release-notes.md
+          retention-days: 5 

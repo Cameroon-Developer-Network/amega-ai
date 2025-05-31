@@ -1,0 +1,75 @@
+name: Issue and PR Management
+
+on:
+  issues:
+    types: [opened, reopened, edited]
+  pull_request:
+    types: [opened, reopened, edited, synchronize]
+
+jobs:
+  triage:
+    name: Issue and PR Triage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Label Issues
+        if: github.event_name == 'issues'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            try {
+              const issue = context.payload.issue;
+              const labels = [];
+              
+              // Add basic labels based on title
+              if (issue.title.toLowerCase().includes('bug')) {
+                labels.push('bug');
+              }
+              if (issue.title.toLowerCase().includes('feature')) {
+                labels.push('enhancement');
+              }
+              if (issue.title.toLowerCase().includes('docs')) {
+                labels.push('documentation');
+              }
+              
+              if (labels.length > 0) {
+                try {
+                  await github.rest.issues.addLabels({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue.number,
+                    labels: labels
+                  });
+                } catch (e) {
+                  console.log('Failed to add labels:', e.message);
+                }
+              }
+            } catch (e) {
+              console.log('Error processing issue:', e.message);
+            }
+      - name: Check PR Title
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            try {
+              const pr = context.payload.pull_request;
+              const title = pr.title.toLowerCase();
+              const validPrefixes = ['feat:', 'fix:', 'docs:', 'style:', 'refactor:', 'test:', 'chore:'];
+              
+              let hasValidPrefix = false;
+              for (const prefix of validPrefixes) {
+                if (title.startsWith(prefix)) {
+                  hasValidPrefix = true;
+                  break;
+                }
+              }
+              
+              if (!hasValidPrefix) {
+                console.log('PR title should start with one of:', validPrefixes.join(', '));
+                console.log('Current title:', title);
+              }
+            } catch (e) {
+              console.log('Error checking PR title:', e.message);
+            }

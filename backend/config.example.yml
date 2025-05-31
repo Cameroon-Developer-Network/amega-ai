@@ -1,0 +1,87 @@
+# AMEGA AI Configuration Example
+
+# Application Settings
+app:
+  name: AMEGA-AI
+  version: 0.1.0
+  debug: false
+
+# Server Settings
+server:
+  host: 0.0.0.0
+  port: 8000
+  allowed_origins:
+    - http://localhost:3000
+    - http://localhost:8000
+
+# Database Settings
+database:
+  url: postgresql://user:password@localhost:5432/amega  # Optional
+
+# Redis Settings
+redis:
+  url: redis://localhost:6379
+
+# LLM Settings
+llm:
+  # Active Backend Selection (huggingface, openai, anthropic, ollama)
+  active_backend: huggingface
+  
+  # Backend Configurations
+  backends:
+    huggingface:
+      model_name: microsoft/DialoGPT-medium
+      api_key: your-huggingface-api-key
+      timeout: 30
+    
+    openai:
+      model_name: gpt-3.5-turbo
+      api_key: your-openai-api-key
+      organization_id: your-org-id
+      timeout: 30
+    
+    anthropic:
+      model_name: claude-3-opus-20240229
+      api_key: your-anthropic-api-key
+      timeout: 30
+    
+    ollama:
+      model_name: llama2
+      api_base: http://localhost:11434
+      timeout: 30
+  
+  # Generation Parameters
+  generation:
+    temperature: 0.7  # Controls randomness (0.0 to 1.0)
+    max_length: 1000  # Maximum length of generated text
+    top_p: 0.9  # Nucleus sampling parameter
+    repetition_penalty: 1.2  # Penalty for repeating tokens
+    top_k: 50  # Number of tokens to consider
+    presence_penalty: 0.0  # Penalty based on token presence (-2.0 to 2.0)
+    frequency_penalty: 0.0  # Penalty based on token frequency (-2.0 to 2.0)
+
+# Security Settings
+security:
+  secret_key: your-secret-key-please-change-in-production
+  algorithm: HS256
+  access_token_expire_minutes: 30
+
+# Rate Limiting Settings
+rate_limit:
+  default_rpm: 100  # Default requests per minute
+  auth_rpm: 1000  # Authenticated requests per minute
+  chat_rpm: 50  # Chat requests per minute
+
+# Logging Settings
+logging:
+  level: INFO  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  file: logs/amega.log
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  max_bytes: 10485760  # 10MB
+  backup_count: 5
+
+# Directory Settings
+directories:
+  models: models
+  data: data
+  cache: cache 
